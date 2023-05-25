@@ -109,9 +109,9 @@ def core1():
     last_data_pin_change = 0
     countdown_duration = 30
     last_closed_door_change = 0
-    door_closed_threshold = 30#0 #5 minutes
+    door_closed_threshold = 300 #5 minutes
     last_opened_door_change = 0
-    door_opened_threshold = 12#00 # 20 minutes
+    door_opened_threshold = 1200 # 20 minutes
     fan_stage = 1 #1 will mean nothing, 2 will mean 5 minutes door closed counting, 3 will mean waiting for door to open, 4 for 20 minutes open door countdown
     #Toggle light to initiate whether it is on or off
     before_adc_value = adc.read_u16()
