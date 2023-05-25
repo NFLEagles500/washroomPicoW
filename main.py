@@ -28,7 +28,8 @@ TX_POWER.value(1)  # Set TX_POWER pin to HIGH to provide 3.3V power
 transmit = TX(pin(), 'washRoomCeilFan') #currently pin 14 (set in tx/get_pin.py)
     #Washer door mag sensor
 washerDoor = machine.Pin(16, machine.Pin.IN)
-
+#Threads kill pin.  Pull this circuit if you can't connect since it starts main.py
+threads_pin = machine.Pin(19, machine.Pin.IN)
 #variables
 url = 'http://192.168.86.33:5000/api'
 rtc = machine.RTC()
@@ -105,6 +106,7 @@ def core1():
     global months
     global rtc
     global run_threads
+    global threads_pin
     led_on = False
     last_data_pin_change = 0
     countdown_duration = 30
@@ -125,7 +127,7 @@ def core1():
     print('Light initiated...')
     doorCheckCount = 25
     # Main loop
-    while True:
+    while while threads_pin.value() == 1:
         if not run_threads:
             print('run thread interrupt')
             break
@@ -255,6 +257,11 @@ def washRoomLog(request):
             return 'done'
         else:
             return '404'
+        
+@app.route('/shutdown')
+def shutdown(request):
+    request.app.shutdown()
+    return 'The server is shutting down...'
 
 try:
     connect()
