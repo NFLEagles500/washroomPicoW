@@ -92,7 +92,7 @@ def connect():
     return ip
 
 def fanOn():
-    test = f'{utcToLocal(datetime)} Fan On'
+    test = f'{utcToLocal('datetime')} Fan On'
     with open('washroom.log', 'a') as fw:
         fw.write(test)
         fw.write('\n')
@@ -102,7 +102,7 @@ def fanOn():
     utime.sleep(0.5)
 
 def fanOff():
-    test = f'{utcToLocal(datetime)} Fan Off'
+    test = f'{utcToLocal('datetime')} Fan Off'
     with open('washroom.log', 'a') as fw:
         fw.write(test)
         fw.write('\n')
@@ -215,7 +215,7 @@ def core1():
                     if (utime.time() - last_opened_door_change) >= door_opened_threshold:
                         fanOn()
                         lcd.clear()
-                        string = f'{utcToLocal(time)}\nFan Started'
+                        string = f'{utcToLocal('time')}\nFan Started'
                         lcd.message(string)
                         last_opened_door_change = 0
                         fan_stage = 1 #Reset fan stage once you start cieling fan
@@ -231,7 +231,7 @@ def core1():
         #print(adc.read_u16())
         if data == 1:
             if not led_on:
-                test = f'{utcToLocal(datetime)} Light On'
+                test = f'{utcToLocal('datetime')} Light On'
                 led_on = True
                 lightToggle('On')
                 #utime.sleep(0.2)
@@ -329,7 +329,7 @@ try:
     ntptime.settime()
     response = urequests.get('https://timeapi.io/api/TimeZone/zone?timeZone=America/Denver')
     localUtcOffset = response.json()['currentUtcOffset']['seconds']
-    print(utcToLocal(datetime))
+    print(utcToLocal('datetime'))
 except KeyboardInterrupt:
     run_threads = False
 
