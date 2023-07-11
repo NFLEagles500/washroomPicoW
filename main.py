@@ -13,6 +13,7 @@ import urequests
 import ujson
 import ntptime
 import envSecrets
+import uos
 
 #Interruptable main.py
 sleep(5)
