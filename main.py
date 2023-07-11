@@ -1,4 +1,3 @@
-#from lcd1602 import LCD
 import network
 import _thread
 from microdot import Microdot, Response
@@ -107,6 +106,7 @@ def logCleanup():
     with open('washroom.log','w') as writeFile:
         for line in entries:
             writeFile.write(line)
+    appLog('Cleaned up washroom.log')
 
 def connect():
     #Connect to WLAN
@@ -246,7 +246,7 @@ def core1():
             doorCheckCount = 1
         # Read data from DATA_PIN
         data = DATA_PIN.value()
-        #print(data)
+        print(data)
         #print(adc.read_u16())
         if data == 1:
             if not led_on:
@@ -319,17 +319,8 @@ def index(request):
         while lastEntry <= firstEntry:
             washLogs.append(examp[firstEntry-1])
             firstEntry = firstEntry - 1
-    '''with open('washroom.log','r') as f:
-        for line in f.readlines():
-            washLogs.append(line)'''
     return render_template('home.html', logs=washLogs)
 
-@app.route('/orders', methods=['GET'])
-def index(req):
-    name = "donsky"
-    orders = ["soap", "shampoo", "powder"]
-
-    return render_template('orders.html', name=name, orders=orders)
 
 @app.route("/api", methods=["POST", "GET"])
 def washRoomLog(request):
@@ -347,11 +338,12 @@ def shutdown(request):
     return 'The server is shutting down...'
 
 try:
+    logCleanup()
     connect()
     onboardled.value(1)
     sleep(2)
     onboardled.value(0)
-    #update_main_script()
+    update_main_script()
     while True:
         try:
             ntptime.settime()
@@ -379,3 +371,4 @@ if __name__ == '__main__':
         app.run(port=80)
     except KeyboardInterrupt:
         run_threads = False
+
