@@ -63,10 +63,10 @@ months = {
 devCheck = uos.uname()
 if 'Pico W' in devCheck.machine:
     dev = 'picow'
-    onboardled = Pin('LED', Pin.OUT)
+    onboardled = machine.Pin('LED', machine.Pin.OUT)
 else:
     dev = 'pico'
-    onboardled = Pin(25, Pin.OUT)
+    onboardled = machine.Pin(25, machine.Pin.OUT)
 led.value(0)
 
 def update_main_script():
