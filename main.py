@@ -250,7 +250,7 @@ def core1():
             doorCheckCount = 1
         # Read data from DATA_PIN
         data = DATA_PIN.value()
-        print(data)
+        #print(data)
         #print(adc.read_u16())
         if data == 1:
             if not led_on:
