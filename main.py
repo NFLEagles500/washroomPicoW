@@ -58,6 +58,16 @@ months = {
         12 : "Dec"
         }
 
+#Setting defaults depending on which pico
+devCheck = uos.uname()
+if 'Pico W' in devCheck.machine:
+    dev = 'picow'
+    onboardled = Pin('LED', Pin.OUT)
+else:
+    dev = 'pico'
+    onboardled = Pin(25, Pin.OUT)
+led.value(0)
+
 def update_main_script():
     response = urequests.get(envSecrets.github_url)
     new_code = response.text
@@ -336,12 +346,17 @@ def shutdown(request):
 
 try:
     connect()
+    onboardled.value(1)
     sleep(2)
+    onboardled.value(0)
     update_main_script()
     while True:
         try:
             ntptime.settime()
             print('ntp success')
+            onboardled.value(1)
+            sleep(1)
+            onboardled.value(0)
             break
         except:
             print('ntp fail')
