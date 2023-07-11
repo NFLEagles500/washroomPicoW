@@ -1,3 +1,4 @@
+#from lcd1602 import LCD
 import network
 import _thread
 from microdot import Microdot, Response
@@ -100,13 +101,16 @@ def logCleanup():
             if line != '\n':
                 entries.append(line)
     if len(entries) > 29:
-        entries = entries[0:29]
+        lastEntry = len(entries)
+        startEntry = lastEntry - 29
+        entries = entries[startEntry:lastEntry]
     print(f"Entries: {entries}")
     
     with open('washroom.log','w') as writeFile:
         for line in entries:
             writeFile.write(line)
     appLog('Cleaned up washroom.log')
+
 
 def connect():
     #Connect to WLAN
@@ -338,7 +342,6 @@ def shutdown(request):
     return 'The server is shutting down...'
 
 try:
-    logCleanup()
     connect()
     onboardled.value(1)
     sleep(2)
@@ -358,7 +361,7 @@ try:
             pass
     response = urequests.get('https://timeapi.io/api/TimeZone/zone?timeZone=America/Denver')
     localUtcOffset = response.json()['currentUtcOffset']['seconds']
-    print(utcToLocal('datetime'))
+    logCleanup()
 except KeyboardInterrupt:
     run_threads = False
 
