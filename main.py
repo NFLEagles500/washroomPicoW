@@ -67,7 +67,7 @@ if 'Pico W' in devCheck.machine:
 else:
     dev = 'pico'
     onboardled = machine.Pin(25, machine.Pin.OUT)
-led.value(0)
+onboardled.value(0)
 
 def update_main_script():
     response = urequests.get(envSecrets.github_url)
