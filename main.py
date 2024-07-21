@@ -254,13 +254,13 @@ def core1():
         #print(adc.read_u16())
         if data == 1:
             if not led_on:
-                test = f'{utcToLocal('datetime')} Light On'
+                #test = f'{utcToLocal('datetime')} Light On'
                 led_on = True
                 lightToggle('On')
                 #utime.sleep(0.2)
-                with open('washroom.log', 'a') as fw:
-                    fw.write(test)
-                    fw.write('\n')
+                #with open('washroom.log', 'a') as fw:
+                #    fw.write(test)
+                #    fw.write('\n')
                 print("Light turned on.")
             #led_on = True
             #LED_PIN.value(1)
@@ -340,13 +340,13 @@ def washRoomLog(request):
 def shutdown(request):
     request.app.shutdown()
     return 'The server is shutting down...'
-
+'''
 try:
-    connect()
+    #connect()
     onboardled.value(1)
     sleep(2)
     onboardled.value(0)
-    update_main_script()
+    #update_main_script()
     while True:
         try:
             ntptime.settime()
@@ -364,7 +364,7 @@ try:
     logCleanup()
 except KeyboardInterrupt:
     run_threads = False
-
+'''
 try:    
     second_thread = _thread.start_new_thread(core1, ())
 except KeyboardInterrupt:
@@ -374,4 +374,5 @@ if __name__ == '__main__':
         app.run(port=80)
     except KeyboardInterrupt:
         run_threads = False
+
 
