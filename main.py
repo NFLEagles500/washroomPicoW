@@ -132,20 +132,24 @@ def connect():
     print(f'{network.hostname()} is connected on {ip}')
 
 def fanOn():
+    '''
     test = f'{utcToLocal('datetime')} Fan On'
     with open('washroom.log', 'a') as fw:
         fw.write(test)
         fw.write('\n')
+        '''
     transmit('fanSpd3')
     utime.sleep(0.5)
     transmit('fan8hr')
     utime.sleep(0.5)
 
 def fanOff():
+    '''
     test = f'{utcToLocal('datetime')} Fan Off'
     with open('washroom.log', 'a') as fw:
         fw.write(test)
         fw.write('\n')
+        '''
     transmit('fanSpd3')
     utime.sleep(0.5)
     transmit('fanOnOff')
